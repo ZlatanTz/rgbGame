@@ -1,32 +1,72 @@
 
-let squaresNum = 6;
+let squaresNum;
 let colorsArray = [];
+let pickedColor;
 
 const colorsContainer = document.querySelector(".colors");
+const rgbElem = document.querySelector('.rgb-span');
+const outcomeElem = document.querySelector('.outcome');
+const titleClassElem = document.querySelector('.title-class')
+
+const easyElem = document.querySelector('.easy');
+const hardElem = document.querySelector('.hard');
 
 document.querySelector('.new-colors')
    .addEventListener('click', () => {
+      resetGame();
       displayColors();
-      pickRandomColor()
    })
 
 
+easyElem.addEventListener('click', () => {
+   squaresNum = 3;
+   resetGame();
+   displayColors();
+})
+
+hardElem.addEventListener('click', () => {
+   squaresNum = 6;
+   resetGame();
+   displayColors();
+})
+   
+
 function displayColors(){
-   colorsArray = [];
-   colorsContainer.innerHTML = ' ';
-   generateColorArray();
+   generateColorArray(); // Returns an array of colors
+   pickedColor = pickRandomColor();
+   rgbElem.innerHTML = pickedColor;
+   console.log(pickedColor);
    colorsArray.forEach(color => {
       let colorElem = document.createElement('div');
       colorElem.classList.add('color');
       colorElem.style.backgroundColor = color;
-      // colorElem.addEventListener('click', guessColor())
       colorsContainer.appendChild(colorElem);
+      colorElem.addEventListener('click', function()  {
+         guessColor.call(this);
+      });
    })
 }
 
 
 
+function guessColor() {
+   let userChosenColor = this.style.backgroundColor;
+   if(userChosenColor === pickedColor){
+      wonGame();
+   }else{
+      outcomeElem.innerHTML = "TRY AGAIN";
+      this.style.backgroundColor = '#232323';
+   }
+}
 
+function wonGame() {
+   outcomeElem.innerHTML = "CORRECT";
+   titleClassElem.style.backgroundColor = pickedColor;
+   document.querySelectorAll('.color')
+      .forEach(color => {
+         color.style.backgroundColor = pickedColor;
+      })
+}
 
 
 function pickRandomColor() {
@@ -49,7 +89,9 @@ function generateRandomColor() {
 
 
 
-
-
-
-
+function resetGame() {
+   colorsArray = [];
+   colorsContainer.innerHTML = ' ';
+   outcomeElem.innerHTML = ' ';
+   titleClassElem.style.backgroundColor = '';
+}

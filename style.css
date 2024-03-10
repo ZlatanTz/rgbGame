@@ -42,6 +42,7 @@ main {
 
 .rgb-span {
    font-size: 1.9em;
+   text-transform: uppercase;
 }
 
 /* Menu */
@@ -102,6 +103,7 @@ main {
 .color {
    background-color: red;
    border-radius: 2em;
+   cursor: pointer;
 }
 
 .color {
